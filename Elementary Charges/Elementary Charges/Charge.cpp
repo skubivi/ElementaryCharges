@@ -44,11 +44,11 @@ void Charge::move() {
 	x += vX;
 	y += vY;
 	if (x - size <= 0 && vX < 0)
-		vX *= abs(vX);
+		vX = abs(vX);
 	else if (x + size >= 1600 && vX > 0)
-		vX *= -abs(vX);
+		vX = -abs(vX);
 	if (y - size <= 0 && vY < 0)
-		vY *= abs(vY);
+		vY = abs(vY);
 	else if (y + size >= 900 && vY > 0)
 		vY = -abs(vY);
 }
