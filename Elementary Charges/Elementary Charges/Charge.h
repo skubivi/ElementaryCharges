@@ -15,7 +15,7 @@ private:
 	float aY;
 	float vX;
 	float vY;
-	const float k = 0.05f;
+	const float k = 0.01f;
 public:
 	Charge(float x, float y, bool positive, float size, bool stat);
 	float getX();
