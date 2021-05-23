@@ -74,7 +74,11 @@ void Charge::hit(Charge &other) {
 		float rY = other.getY() - y;
 		float r = sqrt(rX * rX + rY * rY);
 		if (r <= size + other.getSize()) {
-			float v = sqrt(vX * vX + vY * vY);
+			float v1 = sqrt(vX * vX + vY * vY);
+			float v2 = sqrt(other.vX * other.vX + other.vY * other.vY);
+			float m1 = size * size;
+			float m2 = other.size * other.size;
+			float v = (2 * m2 * v2 + abs(m1 - m2) * v1) / (m1 + m2);
 			float rXN = -rX / r;
 			float rYN = -rY / r;
 			vX = rXN * v;
