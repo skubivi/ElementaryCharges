@@ -15,12 +15,24 @@ void draw(std::vector<Charge>&charges, RenderWindow &window, CircleShape prototy
 	window.display();
 }
 
+void calcA(std::vector<Charge>& charges) {
+	for (int i = 0; i < charges.size(); i++) {
+		charges[i].clearA();
+		for (int j = 0; j < charges.size(); j++) {
+			if (i != j) {
+				charges[i].force(charges[j]);
+			}
+		}
+	}
+}
+
 int main()
 {
 	RenderWindow window(VideoMode(1600, 900), "Elementary Charges");
 	window.setKeyRepeatEnabled(false);
 	std::vector<Charge>charges;
 	float chargeSize = 10.0f;
+	bool stat = false;
 
 	CircleShape prototype = CircleShape(chargeSize);
 	prototype.setFillColor(Color(150, 150, 150));
@@ -36,9 +48,9 @@ int main()
 				window.close();
 			else if (event.type == Event::MouseButtonPressed) {
 				if (event.mouseButton.button == sf::Mouse::Left)
-					charges.push_back(Charge(event.mouseButton.x - chargeSize, event.mouseButton.y - chargeSize, false, chargeSize));
+					charges.push_back(Charge(event.mouseButton.x - chargeSize, event.mouseButton.y - chargeSize, false, chargeSize, stat));
 				else
-					charges.push_back(Charge(event.mouseButton.x - chargeSize, event.mouseButton.y - chargeSize, true, chargeSize));
+					charges.push_back(Charge(event.mouseButton.x - chargeSize, event.mouseButton.y - chargeSize, true, chargeSize, stat));
 			}
 			else if (event.type == Event::MouseWheelScrolled) {
 				chargeSize += 5 * event.mouseWheelScroll.delta;
@@ -48,7 +60,14 @@ int main()
 					charges.pop_back();
 				else if (event.key.code == Keyboard::C)
 					charges.clear();
+				else if (event.key.code == Keyboard::S)
+					stat = !stat;
 			}
+		}
+
+		calcA(charges);
+		for (int i = 0; i < charges.size(); i++) {
+			charges[i].move();
 		}
 
 		draw(charges, window, prototype, chargeSize);
