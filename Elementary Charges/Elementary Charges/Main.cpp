@@ -15,12 +15,13 @@ void draw(std::vector<Charge>&charges, RenderWindow &window, CircleShape prototy
 	window.display();
 }
 
-void calcA(std::vector<Charge>& charges) {
+void calcAV(std::vector<Charge>& charges) {
 	for (int i = 0; i < charges.size(); i++) {
 		charges[i].clearA();
 		for (int j = 0; j < charges.size(); j++) {
 			if (i != j) {
 				charges[i].force(charges[j]);
+				charges[i].hit(charges[j]);
 			}
 		}
 	}
@@ -48,9 +49,9 @@ int main()
 				window.close();
 			else if (event.type == Event::MouseButtonPressed) {
 				if (event.mouseButton.button == sf::Mouse::Left)
-					charges.push_back(Charge(event.mouseButton.x - chargeSize, event.mouseButton.y - chargeSize, false, chargeSize, stat));
+					charges.push_back(Charge(event.mouseButton.x, event.mouseButton.y, false, chargeSize, stat));
 				else
-					charges.push_back(Charge(event.mouseButton.x - chargeSize, event.mouseButton.y - chargeSize, true, chargeSize, stat));
+					charges.push_back(Charge(event.mouseButton.x, event.mouseButton.y, true, chargeSize, stat));
 			}
 			else if (event.type == Event::MouseWheelScrolled) {
 				chargeSize += 5 * event.mouseWheelScroll.delta;
@@ -65,7 +66,7 @@ int main()
 			}
 		}
 
-		calcA(charges);
+		calcAV(charges);
 		for (int i = 0; i < charges.size(); i++) {
 			charges[i].move();
 		}
