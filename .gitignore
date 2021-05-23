@@ -30,3 +30,29 @@
 *.exe
 *.out
 *.app
+
+Elementary Charges/.vs/Elementary Charges/v16/Browse.VC.opendb
+
+Elementary Charges/.vs/Elementary Charges/v16/Browse.VC.db-wal
+
+Elementary Charges/.vs/Elementary Charges/v16/ipch/AutoPCH/27e9bc0f87c01e3a/MAIN.ipch
+
+*.ipch
+
+*.ilk
+
+*.pdb
+
+*.tlog
+
+*.log
+
+Elementary Charges/.vs/Elementary Charges/v16/.suo
+
+*.db
+
+*.db-shm
+
+*.enc
+
+*.idb

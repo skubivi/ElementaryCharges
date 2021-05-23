@@ -44,13 +44,13 @@ void Charge::move() {
 	x += vX;
 	y += vY;
 	if (x - size <= 0 && vX < 0)
-		vX *= -1;
+		vX *= abs(vX);
 	else if (x + size >= 1600 && vX > 0)
-		vX *= -1;
+		vX *= -abs(vX);
 	if (y - size <= 0 && vY < 0)
-		vY *= -1;
+		vY *= abs(vY);
 	else if (y + size >= 900 && vY > 0)
-		vY *= -1;
+		vY = -abs(vY);
 }
 void Charge::force(Charge &other) {
 	if (!stat) {
