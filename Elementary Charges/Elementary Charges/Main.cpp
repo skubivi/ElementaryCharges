@@ -15,12 +15,22 @@ void draw(std::vector<Charge>&charges, RenderWindow &window, CircleShape prototy
 	window.display();
 }
 
-void calcAV(std::vector<Charge>& charges) {
+void calcA(std::vector<Charge>& charges) {
 	for (int i = 0; i < charges.size(); i++) {
 		charges[i].clearA();
 		for (int j = 0; j < charges.size(); j++) {
 			if (i != j) {
 				charges[i].force(charges[j]);
+			}
+		}
+	}
+}
+
+void calcH(std::vector<Charge>& charges) {
+	for (int i = 0; i < charges.size(); i++) {
+		charges[i].clearA();
+		for (int j = 0; j < charges.size(); j++) {
+			if (i != j) {
 				charges[i].hit(charges[j]);
 			}
 		}
@@ -66,7 +76,11 @@ int main()
 			}
 		}
 
-		calcAV(charges);
+		calcA(charges);
+		for (int i = 0; i < charges.size(); i++) {
+			charges[i].accelerate();
+		}
+		calcH(charges);
 		for (int i = 0; i < charges.size(); i++) {
 			charges[i].move();
 		}

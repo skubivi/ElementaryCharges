@@ -38,9 +38,11 @@ void Charge::draw(RenderWindow &window) {
 	}
 	window.draw(circle);
 }
-void Charge::move() {
+void Charge::accelerate() {
 	vX += aX;
 	vY += aY;
+}
+void Charge::move() {
 	x += vX;
 	y += vY;
 	if (x - size <= 0 && vX < 0)

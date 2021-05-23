@@ -23,6 +23,7 @@ public:
 	float getSize();
 	bool isPositive();
 	void draw(RenderWindow &window);
+	void accelerate();
 	void move();
 	void force(Charge &other);
 	void hit(Charge &other);
