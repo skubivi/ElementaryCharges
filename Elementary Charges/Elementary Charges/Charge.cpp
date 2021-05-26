@@ -4,7 +4,7 @@
 
 using namespace sf;
 
-Charge::Charge(float x, float y, bool positive, float size, bool stat) {
+Charge::Charge(float x, float y, bool positive, double size, bool stat) {
 	this->x = x;
 	this->y = y;
 	this->positive = positive;
@@ -14,6 +14,7 @@ Charge::Charge(float x, float y, bool positive, float size, bool stat) {
 	aY = 0.0f;
 	vX = 0.0f;
 	vY = 0.0f;
+	this->m = size * size * size * 3.14 / 3;
 }
 float Charge::getX() {
 	return x;
@@ -21,8 +22,11 @@ float Charge::getX() {
 float Charge::getY() {
 	return y;
 }
-float Charge::getSize() {
+double Charge::getSize() {
 	return size;
+}
+double Charge::getMass() {
+	return m;
 }
 bool Charge::isPositive() {
 	return positive;
@@ -43,8 +47,10 @@ void Charge::accelerate() {
 	vY += aY;
 }
 void Charge::move() {
-	x += vX;
-	y += vY;
+	double vX1 = vX / 100;
+	double vY1 = vY / 100;
+	x += vX1;
+	y += vY1;
 	if (x - size <= 0 && vX < 0)
 		vX = abs(vX);
 	else if (x + size >= 1600 && vX > 0)
@@ -62,10 +68,10 @@ void Charge::force(Charge &other) {
 		else c = 1;
 		float rX = other.getX() - x;
 		float rY = other.getY() - y;
-		float r = sqrt(rX * rX + rY * rY);
-		float rXN = rX / r;
-		float rYN = rY / r;
-		float a = k * other.getSize() * other.getSize() / (r * r);
+		double r = sqrt(rX * rX + rY * rY);
+		double rXN = rX / r;
+		double rYN = rY / r;
+		double a = k * other.getMass() / (r * r);
 		aX += a * rXN * c;
 		aY += a * rYN * c;
 	}
@@ -76,13 +82,11 @@ void Charge::hit(Charge &other) {
 		float rY = other.getY() - y;
 		float r = sqrt(rX * rX + rY * rY);
 		if (r <= size + other.getSize()) {
-			float v1 = sqrt(vX * vX + vY * vY);
-			float v2 = sqrt(other.vX * other.vX + other.vY * other.vY);
-			float m1 = size * size;
-			float m2 = other.size * other.size;
-			float v = (2 * m2 * v2 + abs(m1 - m2) * v1) / (m1 + m2);
-			float rXN = -rX / r;
-			float rYN = -rY / r;
+			double v1 = sqrt(vX * vX + vY * vY);
+			double v2 = sqrt(other.vX * other.vX + other.vY * other.vY);
+			double v = (2 * other.getMass() * v2 + abs(m - other.getMass()) * v1) / (m + other.getMass());
+			double rXN = -rX / r;
+			double rYN = -rY / r;
 			vX = rXN * v;
 			vY = rYN * v;
 		}

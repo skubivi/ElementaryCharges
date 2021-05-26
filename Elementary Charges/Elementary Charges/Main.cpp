@@ -37,6 +37,17 @@ void calcH(std::vector<Charge>& charges) {
 	}
 }
 
+void move(std::vector<Charge>& charges) {
+	calcA(charges);
+	for (int i = 0; i < charges.size(); i++) {
+		charges[i].accelerate();
+	}
+	calcH(charges);
+	for (int i = 0; i < charges.size(); i++) {
+		charges[i].move();
+	}
+}
+
 int main()
 {
 	RenderWindow window(VideoMode(1600, 900), "Elementary Charges");
@@ -76,15 +87,7 @@ int main()
 			}
 		}
 
-		calcA(charges);
-		for (int i = 0; i < charges.size(); i++) {
-			charges[i].accelerate();
-		}
-		calcH(charges);
-		for (int i = 0; i < charges.size(); i++) {
-			charges[i].move();
-		}
-
+		move(charges);
 		draw(charges, window, prototype, chargeSize);
 	}
 

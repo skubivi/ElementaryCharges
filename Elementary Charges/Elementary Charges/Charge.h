@@ -10,17 +10,19 @@ private:
 	bool positive;
 	bool stat;
 	CircleShape circle;
-	float size;
-	float aX;
-	float aY;
-	float vX;
-	float vY;
-	const float k = 0.01f;
+	double size;
+	double m;
+	double aX;
+	double aY;
+	double vX;
+	double vY;
+	const double k = 0.01f;
 public:
-	Charge(float x, float y, bool positive, float size, bool stat);
+	Charge(float x, float y, bool positive, double size, bool stat);
 	float getX();
 	float getY();
-	float getSize();
+	double getSize();
+	double getMass();
 	bool isPositive();
 	void draw(RenderWindow &window);
 	void accelerate();
